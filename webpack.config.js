@@ -11,7 +11,7 @@ module.exports = {
     context: path.resolve(__dirname, 'src'),
     mode: 'development',
     entry: {
-        main: ['@babel/polyfill','./src/index.js'],
+        main: ['@babel/polyfill','./index.js'],
     },
     output: {
         filename: 'main.js',
@@ -30,20 +30,20 @@ module.exports = {
         }
     },
     plugins: [
-        new ExtractTextPlugin({ filename: 'style.css' }),
-        new HtmlWebpackPlugin({
-            template: './src\shared/index.html'
-        }),
-        new CleanWebpackPlugin(),
         new MiniCssExtractPlugin({
             filename:'[name].[contenthash].css'
-        })
+        }),
+        // new ExtractTextPlugin({ filename: 'style.css' }),
+        new HtmlWebpackPlugin({
+            template: './index.html'
+        }),
+        new CleanWebpackPlugin(),
     ],
     devServer: {
-        contentBase: path.join(__dirname, "public/"),
-        port: 3000,
-        publicPath: "http://localhost:3000/dist/",
-        hotOnly: true
+            contentBase: path.join(__dirname, "public/"),
+            port: 3005,
+            publicPath: "http://localhost:3005/",
+            hotOnly: true
         },
     module: {
         rules: [
@@ -88,6 +88,9 @@ module.exports = {
                     presets: [
                         '@babel/preset-env',
                         '@babel/preset-react'
+                    ],
+                    plugins: [
+                        "@babel/plugin-proposal-class-properties"
                     ]
                 }
             }

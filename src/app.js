@@ -2,7 +2,7 @@ import React from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { routes } from './routes/routes';
 import NavigationBar from './components/navigationBar';
-import Authorization from './hooc/authorization';
+import Authorization from './hooks/authorization';
 
 const App = () => {
   const renderSwitch = () => (
