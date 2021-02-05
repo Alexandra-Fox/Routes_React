@@ -2,6 +2,8 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { Redirect } from 'react-router-dom';
+import Button from '@material-ui/core/Button';
+
 
 class Login extends React.Component {
   static propTypes = {
@@ -37,6 +39,9 @@ class Login extends React.Component {
           <label>Password</label>
           <input required type='password' name='password' value={password} onChange={this.onChangePassword} />
           <button type="submit">Sign In</button>
+          <Button variant="contained" color="primary">
+      Hello World
+    </Button>
           <div className='error-message' hidden={!error}>
             {error}
           </div>
@@ -57,8 +62,8 @@ class Login extends React.Component {
     this.setState({ password: value });
   }
 
-  handleSubmit = (event) => {
-    event.preventDefault();
+  handleSubmit = () => {
+  //  event.preventDefault();
     const { username, password } = this.state;
 
     this.props.logIn(username, password);

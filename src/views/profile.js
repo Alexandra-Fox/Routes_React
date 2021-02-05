@@ -1,13 +1,46 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import { SIGN_OUT } from '../store/actionTypes';
 
-const Profile = () => (
-    <React.Fragment>
-          <p>
-            <strong>I'm GROOT</strong>
-            <br/>
-            <a href='https://github.com/Alexandra-Fox'>https://github.com/Alexandra-Fox</a>
-          </p>
-    </React.Fragment>
-  );
-  
-    export default Profile;
+class Profile extends React.Component {
+  static propTypes = {
+    signOut: PropTypes.func.isRequired,
+    username: PropTypes.string.isRequired
+  };
+
+  render() {
+    return (
+      <div>
+        <div>
+          <h2>Profile</h2>
+        </div>
+        <div >
+          <div >
+            <label>Username:</label>
+            <span>{this.props.username}</span>
+          </div>
+          <button onClick={this.signOut}>Sign out</button>
+        </div>
+      </div>
+    );
+  }
+
+  signOut = () => {
+    this.props.signOut();
+  };
+}
+
+const mapStateToProps = (state) => (
+  {
+    username: state.username
+  }
+);
+
+const mapDispatchToProps = (dispatch) => (
+  {
+    signOut: () => dispatch({ type: SIGN_OUT })
+  }
+);
+
+export default connect(mapStateToProps, mapDispatchToProps)(Profile);

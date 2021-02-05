@@ -1,12 +1,24 @@
 import React from 'react';
-import { render } from 'react-dom';
-import { HashRouter } from 'react-router-dom';
-import App from './app';
-import './style.css';
+import ReactDOM from 'react-dom';
+import { Provider } from 'react-redux';
+import { Values } from 'redux-form-website-template';
+import getMuiTheme from 'material-ui/styles/getMuiTheme';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import store from './store/stores';
+import showResults from './components/showResults';
+import MaterialUiForm from './style/MaterualUIForm';
 
-render(
-  <HashRouter>
-    <App />
-  </HashRouter>,
-  document.getElementById('root')
+const rootEl = document.getElementById('root');
+
+ReactDOM.render(
+  <Provider store={store}>
+    <MuiThemeProvider muiTheme={getMuiTheme()}>
+      <div style={{ padding: 15 }}>
+        <h2>Material UI Example</h2>
+        <MaterialUiForm onSubmit={showResults} />
+        <Values form="MaterialUiForm" />
+      </div>
+    </MuiThemeProvider>
+  </Provider>,
+  rootEl,
 );

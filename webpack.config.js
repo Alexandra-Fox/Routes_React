@@ -1,7 +1,7 @@
 const path = require('path')
 
 const HtmlWebpackPlugin = require('html-webpack-plugin')
-const ExtractTextPlugin = require('extract-text-webpack-plugin')
+//const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const isDev = process.env.NODE_ENV ==='development'
@@ -33,7 +33,7 @@ module.exports = {
         new MiniCssExtractPlugin({
             filename:'[name].[contenthash].css'
         }),
-        // new ExtractTextPlugin({ filename: 'style.css' }),
+        //new ExtractTextPlugin({ filename: 'style.css' }),
         new HtmlWebpackPlugin({
             template: './index.html'
         }),
@@ -48,7 +48,24 @@ module.exports = {
     module: {
         rules: [
             {
-            test: /\.css$/i,
+                test: /\.css$/,
+                use:[
+                  // MiniCssExtractPlugin.loader,
+                  'style-loader',
+                  {
+                    loader: 'css-loader',
+                    options:{
+                      importLoaders: 1,
+                      modules: {
+                        localIdentName: "[path][name]__[local]___[hash:base64:5]",
+                    },
+                    }
+                  },
+                  'postcss-loader',
+                ],
+              },
+            {
+            test: /\.(less)$/,
             exclude: /node_modules/,
             use: [
                 'style-loader',
@@ -57,16 +74,29 @@ module.exports = {
                     options:{
                         modules: true
                     }
-                }
+                },
+               /* {
+                    loader:'sass-loader',
+                    options: {
+                        implementation: require('sass'),
+                    }
+                },*/
+                {
+                    loader:'less-loader',
+                    options: {
+                        implementation: require('less'),
+                        modules: true,
+                    }
+                },
             ]
         },
-          {
+         /* {
             test: /\.less$/,
             use: ExtractTextPlugin.extract({
               fallback: 'style-loader',
               use: ['css-loader', 'less-loader'],
             }),
-          },
+          },*/
         {
             test: /\.(png|jpg|svg|gif)$/,
             use: ['file-loader']
